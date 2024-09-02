@@ -19,7 +19,7 @@ def filter_datum(fields: List[str], redaction: str,
 
 def get_logger() -> logging.Logger:
     redacting_format = RedactingFormatter()
-    logger = logging.getLogger('user_data')
+    logger = logging.getLogger('user_data', propagate=False)
     logger.setLevel(logging.INFO)
     stream_handler = logging.StreamHandler()
     stream_handler.setFormatter(redacting_format.FORMAT)
