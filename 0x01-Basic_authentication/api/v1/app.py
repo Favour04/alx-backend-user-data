@@ -9,10 +9,10 @@ from flask import Flask, jsonify, abort, request
 from flask_cors import (CORS, cross_origin)
 import os
 
-logger = logging.getLogger('user_data')
+logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 file_handler = logging.FileHandler('api.log')
-file_handler.setFormatter('%(message)s')
+file_handler.setFormatter('%(name)s %(levelname)s %(asctime)-15s: %(message)s')
 logger.addHandler(file_handler)
 
 app = Flask(__name__)
@@ -48,21 +48,22 @@ def forbidden(error) -> str:
 
 @app.before_request
 def filter() -> str:
-    """ Filter request
-    """
+
     urls = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
+    path = request.path
     if auth is None:
         pass
 
-    if auth.require_auth(request.path, urls) is True:
+    if auth.require_auth(path, urls) is True:
         pass
+    else:
+        return
 
     if auth.authorization_header(request) is None:
-        logger.debug(request)
+        logger.info(f'hello this is the path {request.path}')
         abort(401)
 
     if auth.current_user(request) is None:
-        logger.debug(request)
         abort(403)
 
 
