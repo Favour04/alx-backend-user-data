@@ -1,4 +1,4 @@
-#!/usr/bin/env pyhton3
+#!/usr/bin/env python3
 """This module contain the class BasicAuth
    for basic authentication
 """
