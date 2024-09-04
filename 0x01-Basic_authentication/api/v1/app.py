@@ -48,7 +48,8 @@ def forbidden(error) -> str:
 
 @app.before_request
 def filter() -> str:
-
+    """Filters request
+    """
     urls = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
     path = request.path
     if auth is None:
