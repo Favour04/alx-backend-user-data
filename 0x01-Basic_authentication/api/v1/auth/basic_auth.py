@@ -65,7 +65,7 @@ class BasicAuth(Auth):
         """
         if not isinstance(user_email, str):
             return None
-        
+
         if not isinstance(user_pwd, str):
             return None
 
@@ -80,4 +80,3 @@ class BasicAuth(Auth):
                     return None
         else:
             return None
-            
