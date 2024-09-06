@@ -1,1 +1,3 @@
 %(name)s %(levelname)s %(asctime)-15s: %(message)s
+%(name)s %(levelname)s %(asctime)-15s: %(message)s
+%(name)s %(levelname)s %(asctime)-15s: %(message)s
