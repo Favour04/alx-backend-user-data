@@ -63,7 +63,7 @@ class DB:
         except NoResultFound as e:
             raise e
 
-    def update_user(self, user_id: int, **kwargs):
+    def update_user(self, user_id: int, **kwargs) -> None:
         """Update a particular user
         """
         user = self.find_user_by(id=user_id)
