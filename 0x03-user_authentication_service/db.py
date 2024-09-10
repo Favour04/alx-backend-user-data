@@ -6,12 +6,13 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from user import Base, User
+from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.exc import InvalidRequestError
 
 
 class DB:
     """DB class
     """
-
     def __init__(self) -> None:
         """Initialize a new DB instance
         """
@@ -49,4 +50,15 @@ class DB:
             return user
         except Exception as e:
             self._session.rollback()
+            raise e
+
+    def find_user_by(self, **kwargs) -> User:
+        """Find a user by a given attribute
+        """
+        if not kwargs:
+            raise InvalidRequestError
+        try:
+            user = self._session.query(User).filter_by(**kwargs).one()
+            return user
+        except NoResultFound as e:
             raise e
