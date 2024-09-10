@@ -58,7 +58,13 @@ class DB:
         if not kwargs:
             raise InvalidRequestError
         try:
-            user = self._session.query(User).filter_by(**kwargs).one()
+            user = self._session.query(User).filter_by(**kwargs)
             return user
         except NoResultFound as e:
             raise e
+    # def update_user(self, user_id: int, **kwargs):
+    #     """Update a particular user
+    #     """
+    #     user = self.find_user_by(id=user_id)
+    #     user.
+    #     self.save()

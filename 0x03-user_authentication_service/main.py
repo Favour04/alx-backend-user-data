@@ -18,7 +18,7 @@ find_user = my_db.find_user_by(email="test@test.com")
 print(find_user.id)
 
 try:
-    find_user = my_db.find_user_by(email="test2@test.com")
+    find_user = my_db.find_user_by(email="test@test.com", hashed_password='PwdHashed')
     print(find_user.id)
 except NoResultFound:
     print("Not found")
