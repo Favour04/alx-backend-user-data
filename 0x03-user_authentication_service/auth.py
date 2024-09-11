@@ -91,11 +91,11 @@ class Auth:
         except NoResultFound:
             raise ValueError
 
-    def update_password(self, reset_token: str, password: str) -> str:
+    def update_password(self, reset_token_: str, password: str) -> str:
         """Updates password for users
         """
         try:
-            user = self._db.find_user_by(reset_token=reset_token)
+            user = self._db.find_user_by(reset_token=reset_token_)
             if password:
                 new_hpswd = _hash_password(password)
             else:
