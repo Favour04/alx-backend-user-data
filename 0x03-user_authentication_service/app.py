@@ -72,7 +72,7 @@ def logout():
     if request.method == "DELETE":
         session_id = request.cookies.get('session_id')
         if session_id is None:
-            abort(403)
+            abort(400)
 
         try:
             user = AUTH._db.find_user_by(session_id=session_id)
