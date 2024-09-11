@@ -70,12 +70,7 @@ def logout():
     """Logout route
     """
     if request.method == "DELETE":
-        if request.is_json:
-            data = request.get_json
-        else:
-            data = request.form
-
-        session_id = data.get('session_id')
+        session_id = request.cookies.get('session_id')
         if session_id is None:
             abort(403)
 
