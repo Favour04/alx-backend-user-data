@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Flask app
 """
-from flask import abort, Flask, jsonify, request, redirect
+from flask import abort, Flask, jsonify, request, redirect, url_for
 from sqlalchemy.orm.exc import NoResultFound
 from auth import Auth
 
@@ -82,8 +82,8 @@ def logout():
         try:
             user = AUTH._db.find_user_by(session_id=session_id)
             AUTH.destroy_session(user.id)
-            redirect("/")
-        except Exception:
+            return redirect(url_for("/"))
+        except NoResultFound:
             abort(403)
 
 
