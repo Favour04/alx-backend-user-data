@@ -75,12 +75,28 @@ def logout():
             abort(403)
 
         try:
-            user = AUTH._db.find_user_by(session_id=session_id)
+            user = AUTH.get_user_from_session_id(session_id)
             AUTH.destroy_session(user.id)
             resp = redirect(url_for('index'))
             resp.delete_cookie('session_id')
             return resp
-        except Exception:
+        except NoResultFound:
+            abort(403)
+
+
+@app.route("/profile", methods=["GET"])
+def profile():
+    """Profile route
+    """
+    if request.method == "GET":
+        session_id = request.cookies.get("session_id")
+        if session_id is None:
+            abort(403)
+
+        try:
+            user = AUTH.get_user_from_session_id(session_id)
+            return jsonify({"email": f"{user.email}"}), 200
+        except Exception as e:
             abort(403)
 
 
