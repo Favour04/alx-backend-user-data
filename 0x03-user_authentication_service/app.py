@@ -17,6 +17,8 @@ def get_index():
 
 @app.route("/users", methods=["POST"])
 def user():
+    """This provide route to users
+    """
     if request.method == "POST":
         if request.is_json:
             data = request.get_json
