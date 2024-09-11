@@ -40,7 +40,6 @@ def user():
             return jsonify({"message": "email already registered"}), 400
 
 
-@app.route("/sessions", methods=["POST"])
 def login():
     """Login route
     """
@@ -65,7 +64,6 @@ def login():
             abort(401)
 
 
-@app.route("/sessions", methods=["DELETE"])
 def logout():
     """Logout route
     """
@@ -84,6 +82,16 @@ def logout():
             abort(403)
 
 
+@app.route("/sessions", methods=["POST", "DELETE"])
+def sessions():
+    if request.method == 'POST':
+        return login()
+    elif request.method == 'DELETE':
+        return logout()
+    else:
+        abort(405)
+
+
 @app.route("/profile", methods=["GET"])
 def profile():
     """Profile route
@@ -100,7 +108,6 @@ def profile():
             abort(403)
 
 
-@app.route("/reset_password", methods=["POST"])
 def get_reset_password_token():
     """route to reset password
     """
@@ -121,5 +128,38 @@ def get_reset_password_token():
             abort(403)
 
 
+def update_password():
+    """This update pswd
+    """
+    if request.method == "PUT":
+        if request.is_json:
+            data = request.get_json
+        else:
+            data = request.form
+
+        email = data.get("email")
+        reset_token = data.get("reset_token")
+        new_password = data.get("new_password")
+
+        try:
+            AUTH.update_password(reset_token, new_password)
+            return jsonify({"email": f"{email}", "message":
+                            "Password updated"}), 200
+        except ValueError:
+            abort(403)
+
+
+@app.route("/reset_password", methods=["PUT", "POST"])
+def reset_password():
+    if request.method == 'PUT':
+        return update_password()
+    elif request.method == 'POST':
+        return get_reset_password_token()
+    else:
+        abort(405)
+
+
 if __name__ == "__main__":
+    """Some shit
+    """
     app.run(host="0.0.0.0", port="5000")
