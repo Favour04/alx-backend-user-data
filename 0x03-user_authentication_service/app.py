@@ -2,6 +2,7 @@
 """Flask app
 """
 from flask import abort, Flask, jsonify, request
+from sqlalchemy.orm.exc import NoResultFound
 from auth import Auth
 
 app = Flask(__name__)
@@ -62,6 +63,27 @@ def login():
             return resp
         else:
             abort(401)
+
+
+@app.route("/sessions", methods=["DELETE"])
+def logout():
+    """Logout route
+    """
+    if request.method == "DELETE":
+        if request.is_json:
+            data = request.get_json
+        else:
+            data = request.form
+
+        session_id = data.get('session_id')
+        if session_id is None:
+            abort(403)
+
+        try:
+            user = AUTH._db.find_user_by(session_id=session_id)
+            AUTH.destroy_session(user.id)
+        except NoResultFound:
+            abort(403)
 
 
 if __name__ == "__main__":
