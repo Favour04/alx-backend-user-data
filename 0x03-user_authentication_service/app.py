@@ -6,7 +6,7 @@ from flask import Flask, jsonify
 app = Flask(__name__)
 
 
-@app.get("/")
+@app.route("/", methods=["GET"])
 def get_index():
     """Get index
     """
