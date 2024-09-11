@@ -100,7 +100,7 @@ def profile():
             abort(403)
 
 
-@app.route("/reset_password", methods=["GET"])
+@app.route("/reset_password", methods=["POST"])
 def get_reset_password_token():
     """route to reset password
     """
