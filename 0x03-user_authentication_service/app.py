@@ -116,7 +116,7 @@ def get_reset_password_token():
 
         try:
             tkn = AUTH.get_reset_password_token(email)
-            return jsonify({"email": f"{email}", "reset_token": f"{tkn}"}), 200
+            return jsonify({"email": f"{email}", "reset_token": f"{tkn}"})
         except ValueError:
             abort(403)
 
