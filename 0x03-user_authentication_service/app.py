@@ -75,7 +75,7 @@ def logout():
         try:
             user = AUTH.get_user_from_session_id(session_id)
             AUTH.destroy_session(user.id)
-            resp = redirect(url_for('index'))
+            resp = redirect(url_for('get_index'))
             resp.delete_cookie('session_id')
             return resp
         except NoResultFound:
